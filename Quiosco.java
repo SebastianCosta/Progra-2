@@ -61,6 +61,7 @@ public class Quiosco<T> {
         if (nuevo_Usuario.getTipoP().equals("Perecedero")){
             nuevo_Usuario.setTipoP("P");
             this.codigo_p ++;
+            cant_p ++;
             if (this.codigo_np >100){ 
                 this.codigo_np = 0;
             }
@@ -71,8 +72,9 @@ public class Quiosco<T> {
                         nuevo_Usuario.setTipoU("D");
                         Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p);
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.discapacitados.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_D++;
                         break;
                     }
                 case "Adulto mayor":
@@ -81,8 +83,9 @@ public class Quiosco<T> {
                         nuevo_Usuario.setTipoU("M");
                         Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p);
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.discapacitados.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_M++;
                         break;
                     }
                 case "Mujer embarazada":
@@ -91,8 +94,9 @@ public class Quiosco<T> {
                         nuevo_Usuario.setTipoU("E");
                         Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p);
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.discapacitados.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_E++;
                         break;
                     }
                 case "Regular":
@@ -101,8 +105,9 @@ public class Quiosco<T> {
                         nuevo_Usuario.setTipoU("R");
                         Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p);
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.discapacitados.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_R++;
                         break;
                     }
                 default:
@@ -114,6 +119,7 @@ public class Quiosco<T> {
         else if (nuevo_Usuario.getTipoP().equals("No perecedero")){
             nuevo_Usuario.setTipoP("NP");
             this.codigo_np ++;
+            cant_np ++;
             if (this.codigo_np >100){ 
                 this.codigo_np = 0;
             }
@@ -125,8 +131,9 @@ public class Quiosco<T> {
                         nuevo_Usuario.setTipoU("D");
                         Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np);
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.discapacitados.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_D++;
                         break;
                     }
                 case "Adulto mayor":
@@ -135,8 +142,9 @@ public class Quiosco<T> {
                         nuevo_Usuario.setTipoU("M");
                         Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np);
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.discapacitados.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_M++;
                         break;
                     }
                 case "Mujer embarazada":
@@ -145,8 +153,9 @@ public class Quiosco<T> {
                         nuevo_Usuario.setTipoU("E");
                         Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np);
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.discapacitados.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_E++;
                         break;
                     }
                 case "Regular":
@@ -155,8 +164,9 @@ public class Quiosco<T> {
                         nuevo_Usuario.setTipoU("R");
                         Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np);
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.discapacitados.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_R++;
                         break;
                     }
                 default:

@@ -24,6 +24,9 @@ public class Ventanilla<T> {
     private Lista<T> lista_embarazadas;
     private Lista<T> lista_regulares;
     
+    
+    //Metodos
+    //Constructores
     //Ventanilla para la cola de prioridad
     public Ventanilla(Lista<T> discapacitados,Lista<T> adultos_mayores,Lista<T> embarazadas,Lista<T> regulares){
        this.lista_discapacitados = discapacitados;
@@ -32,13 +35,24 @@ public class Ventanilla<T> {
        this.lista_regulares = regulares;
        Lista<T> lista_vacia = new Lista();
        this.lista_usuarios = lista_vacia;   
+       this.num++;
+       this.estado = "Libre";
     }
     
     //Ventailla con heap
     public Ventanilla(Lista<T> usuarios){
         this.lista_usuarios = usuarios;
     }
+    
+    //Atendender
+    public void atender(){
+    }
+    
+    //Anteder y liberars
+   public void liberar_atender(){
+   }
    
+
    
     
     
