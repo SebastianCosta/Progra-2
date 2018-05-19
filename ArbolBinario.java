@@ -75,7 +75,86 @@ public class ArbolBinario<T> {
         }
     }
     }
+    
+    // Eliminar un nodo del arbol
+    public boolean eliminar(T buscar){
+        ANodoArbol aux = raiz;
+        ANodoArbol padre = raiz;
+        boolean esHijoIzq = true;
+        while(aux.getContenido() != buscar){
+            padre = aux;
+            if(buscar != aux.getContenido()){
+                esHijoIzq = true;
+                aux = aux.getIzquierdo();
+            }else{
+                esHijoIzq = false;
+                aux = aux.getDerecho();
+            }
+            if(aux == null){
+                return false;
+            }
+        }// Fin del While
+        if(aux.getIzquierdo() == null && aux.getDerecho() == null){
+            if(aux == raiz){
+                raiz = null;
+            } else if (esHijoIzq){
+                padre.setIzquierdo(null);
+            }else{
+                padre.setDerecho(null);
+            }
+            
+            } else if (aux.getDerecho() == null){
+                if(aux == raiz){
+                raiz = aux.getIzquierdo();
+            } else if (esHijoIzq){
+                padre.setIzquierdo(aux.getIzquierdo());
+            }else{
+                padre.setDerecho(aux.getIzquierdo());
+            }
+                
+            }else if(aux.getIzquierdo() == null){
+                if(aux == raiz){
+                raiz = aux.getDerecho();
+            } else if (esHijoIzq){
+                padre.setIzquierdo(aux.getDerecho());
+            }else{
+                padre.setDerecho(aux.getIzquierdo());
+            }
+            }else{
+                ANodoArbol nuevo = reemplazar(aux);
+                if(aux == raiz){
+                    raiz = nuevo;
+                }else if (esHijoIzq){
+                    padre.setIzquierdo(nuevo);
+                }else{
+                    padre.setDerecho(nuevo);
+                }
+                nuevo.setIzquierdo(aux.getIzquierdo());
+            }
+        return true;
+    }
+    
+    // Metodo reemplazar
+    public ANodoArbol reemplazar(ANodoArbol preemplazo){
+        ANodoArbol reemplazo_Padre = preemplazo;
+        ANodoArbol reemplazo = preemplazo;
+        ANodoArbol aux =preemplazo.getDerecho();
+        while(aux != null){
+            reemplazo_Padre = preemplazo;
+            reemplazo = aux;
+            aux = aux.getIzquierdo();
+        }
+        if (reemplazo != preemplazo.getDerecho()){
+            reemplazo_Padre.setIzquierdo(reemplazo.getDerecho());
+            reemplazo.setDerecho(preemplazo.getDerecho());
+        }
+        System.out.println("El Nodo Reemplazo: " + reemplazo);
+        return reemplazo.getCabeza();
         
+    }
+                   
+                
+                
     //Recorrer el arbol de forma de preOrden    
     public void preOrden(ANodoArbol nodo){
         if(nodo!=null){
