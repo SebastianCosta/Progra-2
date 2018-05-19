@@ -13,22 +13,39 @@ import Administracion_paquetes.capaLogica.estructuras.Lista;
  */
 public class Quiosco<T> {    
     // Cola de discapacitados
-    private Lista<T> discapacitados;
+    private Lista<T> discapacitados_p;
     // Cola de adulto_mayor
-    private Lista<T> adulto_mayor;
+    private Lista<T> adulto_mayor_p;
     // Cola de embarazada
-    private Lista<T> embarazada;
+    private Lista<T> embarazada_p;
     // Cola de regulares
-    private Lista<T> regulares;
+    private Lista<T> regulares_p;
     //El usuario va a ser el nodo
-    private Lista<T> usuarios;
+    private Lista<T> usuarios_p;
+    
+    // Cola de discapacitados
+    private Lista<T> discapacitados_np;
+    // Cola de adulto_mayor
+    private Lista<T> adulto_mayor_np;
+    // Cola de embarazada
+    private Lista<T> embarazada_np;
+    // Cola de regulares
+    private Lista<T> regulares_np;
+    //El usuario va a ser el nodo
+    private Lista<T> usuarios_np;
     
     public Quiosco(){
-     this.adulto_mayor = new Lista<T>();
-     this.discapacitados = new Lista<T>(); 
-     this.embarazada = new Lista<T>();
-     this.regulares = new Lista<T>();
-     this.usuarios = new Lista<T>();
+     this.adulto_mayor_p = new Lista<T>();
+     this.discapacitados_p = new Lista<T>(); 
+     this.embarazada_p = new Lista<T>();
+     this.regulares_p = new Lista<T>();
+     this.usuarios_p = new Lista<T>();
+     
+     this.adulto_mayor_np = new Lista<T>();
+     this.discapacitados_np = new Lista<T>(); 
+     this.embarazada_np = new Lista<T>();
+     this.regulares_np = new Lista<T>();
+     this.usuarios_np = new Lista<T>();
     }
     
     // Variable que asigna el número consecutivo en el boleto de No Perecederos
@@ -56,11 +73,12 @@ public class Quiosco<T> {
      public static int cant_R = 0;
     
     public void registrar_usuario(String pnombre, String pemail, String ptipoU, String ptipoP){
-        Usuario nuevo_Usuario = new Usuario(pnombre, pemail, ptipoU, ptipoP);
+        Usuario nuevo_Usuario = new Usuario(pnombre, pemail, ptipoU, ptipoP,0);
         
         if (nuevo_Usuario.getTipoP().equals("Perecedero")){
             nuevo_Usuario.setTipoP("P");
             this.codigo_p ++;
+            cant_p ++;
             if (this.codigo_np >100){ 
                 this.codigo_np = 0;
             }
@@ -69,40 +87,45 @@ public class Quiosco<T> {
                 case "Discapacitados":
                     {
                         nuevo_Usuario.setTipoU("D");
-                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p);
+                        nuevo_Usuario.setPrioridad(4);
+                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p,nuevo_Usuario.getPrioridad());
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.discapacitados_p.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_D++;
                         break;
                     }
                 case "Adulto mayor":
                     {
                         nuevo_Usuario.setTipoU("M");
-                        nuevo_Usuario.setTipoU("M");
-                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p);
+                        nuevo_Usuario.setPrioridad(3);
+                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p,nuevo_Usuario.getPrioridad());
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.adulto_mayor_p.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_M++;
                         break;
                     }
                 case "Mujer embarazada":
                     {
                         nuevo_Usuario.setTipoU("E");
-                        nuevo_Usuario.setTipoU("E");
-                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p);
+                        nuevo_Usuario.setPrioridad(2);
+                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p,nuevo_Usuario.getPrioridad());
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.embarazada_p.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_E++;
                         break;
                     }
                 case "Regular":
                     {
                         nuevo_Usuario.setTipoU("R");
-                        nuevo_Usuario.setTipoU("R");
-                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p);
+                        nuevo_Usuario.setPrioridad(1);
+                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p,nuevo_Usuario.getPrioridad());
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.regulares_p.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_R++;
                         break;
                     }
                 default:
@@ -114,6 +137,7 @@ public class Quiosco<T> {
         else if (nuevo_Usuario.getTipoP().equals("No perecedero")){
             nuevo_Usuario.setTipoP("NP");
             this.codigo_np ++;
+            cant_np ++;
             if (this.codigo_np >100){ 
                 this.codigo_np = 0;
             }
@@ -122,41 +146,45 @@ public class Quiosco<T> {
                 case "Discapacitados":
                     {
                         nuevo_Usuario.setTipoU("D");
-                        nuevo_Usuario.setTipoU("D");
-                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np);
+                        nuevo_Usuario.setPrioridad(4);
+                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np,nuevo_Usuario.getPrioridad());
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.discapacitados_np.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_D++;
                         break;
                     }
                 case "Adulto mayor":
                     {
                         nuevo_Usuario.setTipoU("M");
-                        nuevo_Usuario.setTipoU("M");
-                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np);
+                        nuevo_Usuario.setPrioridad(3);
+                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np,nuevo_Usuario.getPrioridad());
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.adulto_mayor_np.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_M++;
                         break;
                     }
                 case "Mujer embarazada":
                     {
                         nuevo_Usuario.setTipoU("E");
-                        nuevo_Usuario.setTipoU("E");
-                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np);
+                        nuevo_Usuario.setPrioridad(2);
+                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np,nuevo_Usuario.getPrioridad());
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.embarazada_np.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_E++;
                         break;
                     }
                 case "Regular":
                     {
                         nuevo_Usuario.setTipoU("R");
-                        nuevo_Usuario.setTipoU("R");
-                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np);
+                        nuevo_Usuario.setPrioridad(1);
+                        Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_np,nuevo_Usuario.getPrioridad());
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
-                        this.discapacitados.agregar_inicio((T) nuevo_Usuario);
+                        this.regulares_np.agregar_inicio((T) nuevo_Boleto);
                         nuevo_Boleto.imprimir();
+                        cant_R++;
                         break;
                     }
                 default:
@@ -166,46 +194,151 @@ public class Quiosco<T> {
             
         }
     }
+
+    public Lista<T> getDiscapacitados_p() {
+        return discapacitados_p;
+    }
+
+    public void setDiscapacitados_p(Lista<T> discapacitados_p) {
+        this.discapacitados_p = discapacitados_p;
+    }
+
+    public Lista<T> getAdulto_mayor_p() {
+        return adulto_mayor_p;
+    }
+
+    public void setAdulto_mayor_p(Lista<T> adulto_mayor_p) {
+        this.adulto_mayor_p = adulto_mayor_p;
+    }
+
+    public Lista<T> getEmbarazada_p() {
+        return embarazada_p;
+    }
+
+    public void setEmbarazada_p(Lista<T> embarazada_p) {
+        this.embarazada_p = embarazada_p;
+    }
+
+    public Lista<T> getRegulares_p() {
+        return regulares_p;
+    }
+
+    public void setRegulares_p(Lista<T> regulares_p) {
+        this.regulares_p = regulares_p;
+    }
+
+    public Lista<T> getUsuarios_p() {
+        return usuarios_p;
+    }
+
+    public void setUsuarios_p(Lista<T> usuarios_p) {
+        this.usuarios_p = usuarios_p;
+    }
+
+    public Lista<T> getDiscapacitados_np() {
+        return discapacitados_np;
+    }
+
+    public void setDiscapacitados_np(Lista<T> discapacitados_np) {
+        this.discapacitados_np = discapacitados_np;
+    }
+
+    public Lista<T> getAdulto_mayor_np() {
+        return adulto_mayor_np;
+    }
+
+    public void setAdulto_mayor_np(Lista<T> adulto_mayor_np) {
+        this.adulto_mayor_np = adulto_mayor_np;
+    }
+
+    public Lista<T> getEmbarazada_np() {
+        return embarazada_np;
+    }
+
+    public void setEmbarazada_np(Lista<T> embarazada_np) {
+        this.embarazada_np = embarazada_np;
+    }
+
+    public Lista<T> getRegulares_np() {
+        return regulares_np;
+    }
+
+    public void setRegulares_np(Lista<T> regulares_np) {
+        this.regulares_np = regulares_np;
+    }
+
+    public Lista<T> getUsuarios_np() {
+        return usuarios_np;
+    }
+
+    public void setUsuarios_np(Lista<T> usuarios_np) {
+        this.usuarios_np = usuarios_np;
+    }
+
+    public int getCodigo_np() {
+        return codigo_np;
+    }
+
+    public void setCodigo_np(int codigo_np) {
+        this.codigo_np = codigo_np;
+    }
+
+    public int getCodigo_p() {
+        return codigo_p;
+    }
+
+    public void setCodigo_p(int codigo_p) {
+        this.codigo_p = codigo_p;
+    }
+
+    public static int getCant_np() {
+        return cant_np;
+    }
+
+    public static void setCant_np(int cant_np) {
+        Quiosco.cant_np = cant_np;
+    }
+
+    public static int getCant_p() {
+        return cant_p;
+    }
+
+    public static void setCant_p(int cant_p) {
+        Quiosco.cant_p = cant_p;
+    }
+
+    public static int getCant_D() {
+        return cant_D;
+    }
+
+    public static void setCant_D(int cant_D) {
+        Quiosco.cant_D = cant_D;
+    }
+
+    public static int getCant_M() {
+        return cant_M;
+    }
+
+    public static void setCant_M(int cant_M) {
+        Quiosco.cant_M = cant_M;
+    }
+
+    public static int getCant_E() {
+        return cant_E;
+    }
+
+    public static void setCant_E(int cant_E) {
+        Quiosco.cant_E = cant_E;
+    }
+
+    public static int getCant_R() {
+        return cant_R;
+    }
+
+    public static void setCant_R(int cant_R) {
+        Quiosco.cant_R = cant_R;
+    }
     
-    public Lista<T> getDiscapacitados() {
-        return discapacitados;
-    }
-
-    public void setDiscapacitados(Lista<T> discapacitados) {
-        this.discapacitados = discapacitados;
-    }
-
-    public Lista<T> getAdulto_mayor() {
-        return adulto_mayor;
-    }
-
-    public void setAdulto_mayor(Lista<T> adulto_mayor) {
-        this.adulto_mayor = adulto_mayor;
-    }
-
-    public Lista<T> getEmbarazada() {
-        return embarazada;
-    }
-
-    public void setEmbarazada(Lista<T> embarazada) {
-        this.embarazada = embarazada;
-    }
-
-    public Lista<T> getRegulares() {
-        return regulares;
-    }
-
-    public void setRegulares(Lista<T> regulares) {
-        this.regulares = regulares;
-    }
-
-    public Lista<T> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(Lista<T> usuarios) {
-        this.usuarios = usuarios;
-    }
-    
+   
     
 }

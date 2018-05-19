@@ -16,7 +16,7 @@ public class Ventanilla<T> {
     //Atributos
     public static int numero = 0 ; 
     private int num;
-    private String estado;
+    private boolean estado;
     private Usuario atendiendo ;
     private Lista<T> lista_usuarios;
     private Lista<T> lista_discapacitados;
@@ -24,21 +24,49 @@ public class Ventanilla<T> {
     private Lista<T> lista_embarazadas;
     private Lista<T> lista_regulares;
     
+    
+    //Metodos
+    //Constructores
     //Ventanilla para la cola de prioridad
-    public Ventanilla(Lista<T> discapacitados,Lista<T> adultos_mayores,Lista<T> embarazadas,Lista<T> regulares){
+    public Ventanilla(Lista<T> discapacitados,Lista<T> adultos_mayores,Lista<T> embarazadas,Lista<T> regulares,String tipo_ventanilla, int identificador){
+       super();
        this.lista_discapacitados = discapacitados;
        this.lista_adultos_mayores =  adultos_mayores;
        this.lista_embarazadas = embarazadas;
        this.lista_regulares = regulares;
        Lista<T> lista_vacia = new Lista();
        this.lista_usuarios = lista_vacia;   
+       this.lista_usuarios.agregar_inicio((T) lista_discapacitados);
+       this.lista_usuarios.agregar_inicio((T) lista_adultos_mayores);
+       this.lista_usuarios.agregar_inicio((T) lista_embarazadas);
+       this.lista_usuarios.agregar_inicio((T) lista_regulares);
+       this.num++;
+       this.estado = true;
     }
+    
     
     //Ventailla con heap
     public Ventanilla(Lista<T> usuarios){
         this.lista_usuarios = usuarios;
     }
+    
+    //Atendender
+    public boolean atender(){
+        this.estado = true;
+        return true;
+    }
+    
+    //Anteder y liberars
+   public boolean liberar(){
+       estado = false;
+       return true;
+   }
    
+   public boolean liberarAtender(){
+        return true;
+    }
+   
+
    
     
     
