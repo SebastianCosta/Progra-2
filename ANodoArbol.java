@@ -35,6 +35,8 @@ public class ANodoArbol<T>{
         this.derecho = null;
         this.priporidad = pPrioridad;
     }
+      
+      
 
     public int getPriporidad() {
         return priporidad;
@@ -68,6 +70,7 @@ public class ANodoArbol<T>{
     public void setIzquierdo(ANodoArbol<T> izquierdo) {
         this.izquierdo = izquierdo;
     }
+    
 
     public ANodoArbol<T> getDerecho() {
         return derecho;
@@ -76,5 +79,7 @@ public class ANodoArbol<T>{
     public void setDerecho(ANodoArbol<T> derecho) {
         this.derecho = derecho;
     }
+
+ 
     
 }
