@@ -11,10 +11,16 @@ import Administracion_paquetes.capaLogica.estructuras.Lista;
  *
  * @author Joan
  */
-public class Ventanilla_Seguridad extends Ventanilla{
+public class Ventanilla_noperecederos<T> extends Ventanilla {
     
-    public Ventanilla_Seguridad(Lista discapacitados, Lista adultos_mayores, Lista embarazadas, Lista regulares,String tipo_ventanilla, int identificador) {
+    public static int clientes_atendidos_noperecederos = 0;
+    public int noperecederos_atendido = 0;
+    
+    public Ventanilla_noperecederos(Lista<T> discapacitados, Lista<T> adultos_mayores, Lista<T> embarazadas, Lista<T> regulares,String tipo_ventanilla, int identificador) {
         super(discapacitados, adultos_mayores, embarazadas, regulares, tipo_ventanilla, identificador);
+        clientes_atendidos_noperecederos ++;
     }
     
 }
+    
+

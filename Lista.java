@@ -79,7 +79,7 @@ public class Lista<T> {
     public void ver() {
         this.apuntando = cabeza;
         while (this.apuntando != null) {
-            System.out.print("[" + this.apuntando.getContiene() + "] --->");
+            System.out.print( "[" + this.apuntando.getContiene() + "] --->");
             this.apuntando = this.apuntando.getSiguiente();
         }
     }
@@ -107,8 +107,10 @@ public class Lista<T> {
 
     /**
      *
+     * @return 
      */
-    public void elim_final() {
+    public T elim_final() {
+        NodoS<T> fin = this.cola;
         NodoS<T> aux = this.cabeza;
         int i = 0;
         while (i < this.tamano-1) {
@@ -122,6 +124,8 @@ public class Lista<T> {
         }
         //System.out.println(cabeza.getContiene());
         this.tamano--;
+        System.out.println(fin.getContiene());
+        return (T) fin.getContiene();
     }
     
     /**

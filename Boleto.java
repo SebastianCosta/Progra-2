@@ -13,11 +13,21 @@ public class Boleto {
     private String tipo;   
     private String usuario;
     private int    numero;
+    private int    prioridad;
 
-    public Boleto(String tipo, String usuario, int numero) {
+    public Boleto(String tipo, String usuario, int numero, int prioridad) {
         this.tipo = tipo;
         this.usuario = usuario;
         this.numero = numero;
+        this.prioridad = prioridad;
+    }
+
+    public int getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(int prioridad) {
+        this.prioridad = prioridad;
     }
 
     public String getTipo() {

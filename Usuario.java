@@ -21,17 +21,25 @@ public class Usuario {
     private String tipoP;
     //Boleto asociado
     private Boleto boleto;
+    //Prioridad
+    private int prioridad;
     
     //Metodos
-    public Usuario (String pnombre, String pemail, String ptipoU, String ptipoP){
+    public Usuario (String pnombre, String pemail, String ptipoU, String ptipoP, int prioridad){
         this.email = pemail;
         this.nombre = pnombre;
         this.tipoP = ptipoP;
         this.tipoU = ptipoU;
     }
     
-
     //Getts an setters
+    public int getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(int prioridad) {    
+        this.prioridad = prioridad;
+    }
 
     public String getNombre() {
         return nombre;
