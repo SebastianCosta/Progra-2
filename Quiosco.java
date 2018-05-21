@@ -5,6 +5,7 @@
  */
 package Administracion_paquetes.capaLogica.logicaNegocios;
 import Administracion_paquetes.capaLogica.estructuras.Lista;
+//importaciones para poder enviar mensajes SMS
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
  * @param <T>
  */
 public class Quiosco<T> {    
+    //Atributos de la clase
     // Cola de discapacitados
     private Lista<T> discapacitados_p;
     // Cola de adulto_mayor
@@ -41,6 +43,9 @@ public class Quiosco<T> {
     //El usuario va a ser el nodo
     private Lista<T> usuarios_np;
       
+    /**
+     *Constructor
+     */
     public Quiosco(){
      this.adulto_mayor_p = new Lista<T>();
      this.discapacitados_p = new Lista<T>(); 
@@ -56,50 +61,106 @@ public class Quiosco<T> {
     }
     
     // Variable que asigna el número consecutivo en el boleto de No Perecederos
+
+    /**
+     *
+     */
     public int codigo_np = -1;
     
     // Variable que asigna el número consecutivo en el boleto de Perecederos
+
+    /**
+     *
+     */
     public int codigo_p = -1;
     
      // Variable que asigna el número consecutivo en el boleto de No Perecederos
+
+    /**
+     *
+     */
     public static int cant_np = 0;
     
     // Variable que asigna el número consecutivo en el boleto de Perecederos
+
+    /**
+     *
+     */
      public static int cant_p = 0;
      
      // cantidad de boletos dispensados para discapacitados
+
+    /**
+     *
+     */
      public static int cant_D = 0;
      
      //cantidad de boletos dispensados para adultos mayores
+
+    /**
+     *
+     */
      public static int cant_M = 0;
      
      //cantidad de boletos dispensados para mujeres embarazadas
+
+    /**
+     *
+     */
      public static int cant_E = 0;
      
      //cantidad de boletos dispensados para regulares
+
+    /**
+     *
+     */
      public static int cant_R = 0;
     
+    // String 
+
+    /**
+     *Funcion que se encarga de asignar un boleto al usuario
+     * @param pnombre
+     * @param pemail
+     * @param ptipoU
+     * @param ptipoP
+     * @param numero
+     */
     public void registrar_usuario(String pnombre, String pemail, String ptipoU, String ptipoP,String numero){
         Usuario nuevo_Usuario = new Usuario(pnombre, pemail, ptipoU, ptipoP,0,numero);
-        
+        // Depende del paquete entra en Perecedero o No perecedero
         if (nuevo_Usuario.getTipoP().equals("Perecedero")){
             nuevo_Usuario.setTipoP("P");
             this.codigo_p ++;
             cant_p ++;
+            // condiciona que el boleto no sea mayor a 99
             if (this.codigo_p >100){ 
                 this.codigo_p = 0;
             }
-            
+            // Ahora se selecciona el tipo de usuario
             switch (nuevo_Usuario.getTipoU()) {
                 case "Discapacitados":
                     {
+                        // se asigna la variable del tipo de boleto
                         nuevo_Usuario.setTipoU("D");
+                        
+                        // se asigna la prioridad al usuario
                         nuevo_Usuario.setPrioridad(4);
+                        
+                        // se crear el boleto del usuario
                         Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p,nuevo_Usuario.getPrioridad());
+                        
+                        // Se le agregar al usuario su boleto
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
+                        
+                        // El boleto se agrega a la cola correspondiente
                         this.discapacitados_p.agregar_inicio((T) nuevo_Boleto);
+                        
+                        // SMS guarda el boleto
                         String SMS = nuevo_Boleto.getTipo()+ "-" + nuevo_Boleto.getUsuario()+ "-" + this.codigo_p;
                         enviarMensaje(SMS,nuevo_Usuario.getNumero());
+                        
+                        //Funcion que revisa el boleto
                         nuevo_Boleto.imprimir();
                         cant_D++;
                         break;
@@ -111,6 +172,7 @@ public class Quiosco<T> {
                         Boleto nuevo_Boleto = new Boleto(nuevo_Usuario.getTipoP(),nuevo_Usuario.getTipoU(),this.codigo_p,nuevo_Usuario.getPrioridad());
                         nuevo_Usuario.setBoleto(nuevo_Boleto);
                         this.adulto_mayor_p.agregar_inicio((T) nuevo_Boleto);
+                        //
                         String SMS = nuevo_Boleto.getTipo() + nuevo_Boleto.getUsuario() + this.codigo_p;
                         enviarMensaje(SMS,nuevo_Usuario.getNumero());
                         nuevo_Boleto.imprimir();
@@ -218,14 +280,15 @@ public class Quiosco<T> {
         }
     }
     /**
-     * En esta clase es utiliza el api para enviar un msm 
-     * @param tiquete
-     * @param numero 
+     * En esta clase es utiliza el api para enviar un msm Puntos extra
+     * @param tiquete el tquete asignado al usuario
+     * @param numero numero del usuario 
      */
     public  void enviarMensaje(String tiquete, String numero){
         
         try {
-            //Info del mensaje
+            //Info del mensaje 
+            // 
             String apiKey = "apikey=" + "TiMgaDCO7oQ-c6vSvfGGUeHS5IeVsmjJj48HGRbCiS";
             String message = "&message=" + "Courier TEC, su número de tiquete es: " + tiquete ;
             String sender = "&sender=" + "Courier TEC";
@@ -253,146 +316,290 @@ public class Quiosco<T> {
         
     }
 
+    /**
+     *
+     * @return
+     */
     public Lista<T> getDiscapacitados_p() {
         return discapacitados_p;
     }
 
+    /**
+     *
+     * @param discapacitados_p
+     */
     public void setDiscapacitados_p(Lista<T> discapacitados_p) {
         this.discapacitados_p = discapacitados_p;
     }
 
+    /**
+     *
+     * @return
+     */
     public Lista<T> getAdulto_mayor_p() {
         return adulto_mayor_p;
     }
 
+    /**
+     *
+     * @param adulto_mayor_p
+     */
     public void setAdulto_mayor_p(Lista<T> adulto_mayor_p) {
         this.adulto_mayor_p = adulto_mayor_p;
     }
 
+    /**
+     *
+     * @return
+     */
     public Lista<T> getEmbarazada_p() {
         return embarazada_p;
     }
 
+    /**
+     *
+     * @param embarazada_p
+     */
     public void setEmbarazada_p(Lista<T> embarazada_p) {
         this.embarazada_p = embarazada_p;
     }
 
+    /**
+     *
+     * @return
+     */
     public Lista<T> getRegulares_p() {
         return regulares_p;
     }
 
+    /**
+     *
+     * @param regulares_p
+     */
     public void setRegulares_p(Lista<T> regulares_p) {
         this.regulares_p = regulares_p;
     }
 
+    /**
+     *
+     * @return
+     */
     public Lista<T> getUsuarios_p() {
         return usuarios_p;
     }
 
+    /**
+     *
+     * @param usuarios_p
+     */
     public void setUsuarios_p(Lista<T> usuarios_p) {
         this.usuarios_p = usuarios_p;
     }
 
+    /**
+     *
+     * @return
+     */
     public Lista<T> getDiscapacitados_np() {
         return discapacitados_np;
     }
 
+    /**
+     *
+     * @param discapacitados_np
+     */
     public void setDiscapacitados_np(Lista<T> discapacitados_np) {
         this.discapacitados_np = discapacitados_np;
     }
 
+    /**
+     *
+     * @return
+     */
     public Lista<T> getAdulto_mayor_np() {
         return adulto_mayor_np;
     }
 
+    /**
+     *
+     * @param adulto_mayor_np
+     */
     public void setAdulto_mayor_np(Lista<T> adulto_mayor_np) {
         this.adulto_mayor_np = adulto_mayor_np;
     }
 
+    /**
+     *
+     * @return
+     */
     public Lista<T> getEmbarazada_np() {
         return embarazada_np;
     }
 
+    /**
+     *
+     * @param embarazada_np
+     */
     public void setEmbarazada_np(Lista<T> embarazada_np) {
         this.embarazada_np = embarazada_np;
     }
 
+    /**
+     *
+     * @return
+     */
     public Lista<T> getRegulares_np() {
         return regulares_np;
     }
 
+    /**
+     *
+     * @param regulares_np
+     */
     public void setRegulares_np(Lista<T> regulares_np) {
         this.regulares_np = regulares_np;
     }
 
+    /**
+     *
+     * @return
+     */
     public Lista<T> getUsuarios_np() {
         return usuarios_np;
     }
 
+    /**
+     *
+     * @param usuarios_np
+     */
     public void setUsuarios_np(Lista<T> usuarios_np) {
         this.usuarios_np = usuarios_np;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCodigo_np() {
         return codigo_np;
     }
 
+    /**
+     *
+     * @param codigo_np
+     */
     public void setCodigo_np(int codigo_np) {
         this.codigo_np = codigo_np;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCodigo_p() {
         return codigo_p;
     }
 
+    /**
+     *
+     * @param codigo_p
+     */
     public void setCodigo_p(int codigo_p) {
         this.codigo_p = codigo_p;
     }
 
+    /**
+     *
+     * @return
+     */
     public static int getCant_np() {
         return cant_np;
     }
 
+    /**
+     *
+     * @param cant_np
+     */
     public static void setCant_np(int cant_np) {
         Quiosco.cant_np = cant_np;
     }
 
+    /**
+     *
+     * @return
+     */
     public static int getCant_p() {
         return cant_p;
     }
 
+    /**
+     *
+     * @param cant_p
+     */
     public static void setCant_p(int cant_p) {
         Quiosco.cant_p = cant_p;
     }
 
+    /**
+     *
+     * @return
+     */
     public static int getCant_D() {
         return cant_D;
     }
 
+    /**
+     *
+     * @param cant_D
+     */
     public static void setCant_D(int cant_D) {
         Quiosco.cant_D = cant_D;
     }
 
+    /**
+     *
+     * @return
+     */
     public static int getCant_M() {
         return cant_M;
     }
 
+    /**
+     *
+     * @param cant_M
+     */
     public static void setCant_M(int cant_M) {
         Quiosco.cant_M = cant_M;
     }
 
+    /**
+     *
+     * @return
+     */
     public static int getCant_E() {
         return cant_E;
     }
 
+    /**
+     *
+     * @param cant_E
+     */
     public static void setCant_E(int cant_E) {
         Quiosco.cant_E = cant_E;
     }
 
+    /**
+     *
+     * @return
+     */
     public static int getCant_R() {
         return cant_R;
     }
 
+    /**
+     *
+     * @param cant_R
+     */
     public static void setCant_R(int cant_R) {
         Quiosco.cant_R = cant_R;
     }
